@@ -12,5 +12,23 @@ $(function () {
         // console.log(options.url);
         if (options.url === 'http://127.0.0.1:5500/index.html') return;
         options.url = baseURL + options.url;
+
+        if (options.url.indexOf('/my/') != 1) {
+            options.headers = {
+                // 重新登录 token过期事件12个小时
+                Authorization: localStorage.getItem('token') || ""
+            },
+                // 身份拦截
+                options.complete = function (res) {
+                    console.log(res);
+                    let obj = res.responseJSON;
+                    if (obj.status == 1 && obj.message == '身份认证失败！') {
+                        //    清除数据
+                        localStorage.removeItem('token');
+                        // 跳转
+                        location.href = '/login.html'
+                    }
+                }
+        }
     })
 })
