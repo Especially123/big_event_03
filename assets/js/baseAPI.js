@@ -20,7 +20,7 @@ $(function () {
             },
                 // 身份拦截
                 options.complete = function (res) {
-                    console.log(res);
+                    // console.log(res);
                     let obj = res.responseJSON;
                     if (obj.status == 1 && obj.message == '身份认证失败！') {
                         //    清除数据
